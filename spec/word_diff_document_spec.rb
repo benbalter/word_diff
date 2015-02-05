@@ -11,15 +11,13 @@ describe "WordDiff::Document" do
       :branch => "master",
       :author => { :email => "ben@example.com", :name => "Ben Balter" }
     )
+
+    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.docx").
+       to_return(:status => 200, :body => File.open(fixture("contents.json")).read, :headers => {'Content-Type'=>'application/json'})
   end
 
   it "should know the markdown path" do
     expect(@document.md_path).to eql("/file.md")
-  end
-
-  it "builds the raw path" do
-    expected = "https://github.com/benbalter/test-repo-ignore-me/raw/aae67a7e9c7097c1af8c7fcbf56c2a736f9e69ff/file.docx"
-    expect(@document.raw_path).to eql(expected)
   end
 
   it "knows the filename" do
@@ -31,7 +29,6 @@ describe "WordDiff::Document" do
   end
 
   it "downloads the file" do
-    @document.instance_variable_set("@raw_path", fixture("file.docx"))
     @document.download
     expect(File.exists?(@document.local_path)).to eql(true)
     @document.cleanup
@@ -42,7 +39,6 @@ describe "WordDiff::Document" do
   end
 
   it "cleans up the temp file" do
-    @document.instance_variable_set("@raw_path", fixture("file.docx"))
     @document.download
     expect(File.exists?(@document.local_path)).to eql(true)
     @document.cleanup
@@ -50,7 +46,6 @@ describe "WordDiff::Document" do
   end
 
   it "converts the document" do
-    @document.instance_variable_set("@raw_path", fixture("file.docx"))
     expect(@document.to_md).to match(/TEST TEST TEST/)
   end
 
@@ -76,9 +71,7 @@ describe "WordDiff::Document" do
   end
 
   it "creates the md file" do
-    @document.instance_variable_set("@raw_path", fixture("file.docx"))
     @document.instance_variable_set("@md", "")
-
     stub = stub_request(:put, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.md").
          with(:body => "{\"branch\":\"master\",\"author\":{\"email\":\"ben@example.com\",\"name\":\"Ben Balter\"},\"content\":\"\",\"message\":\"Convert /file.docx\"}").
          to_return(:status => 200)
@@ -88,9 +81,7 @@ describe "WordDiff::Document" do
   end
 
   it "updates the md file" do
-    @document.instance_variable_set("@raw_path", fixture("file.docx"))
     @document.instance_variable_set("@md", "")
-
     fixture = File.open(fixture("md-exists.json")).read
     stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/").
         to_return(:status => 200, :body => fixture, :headers => {'Content-Type'=>'application/json'})
@@ -104,9 +95,7 @@ describe "WordDiff::Document" do
   end
 
   it "converts the file when it exists" do
-    @document.instance_variable_set("@raw_path", fixture("file.docx"))
     @document.instance_variable_set("@md", "")
-
     fixture = File.open(fixture("md-exists.json")).read
     stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/").
         to_return(:status => 200, :body => fixture, :headers => {'Content-Type'=>'application/json'})
@@ -120,9 +109,7 @@ describe "WordDiff::Document" do
   end
 
   it "converts the file when it doesn't exist" do
-    @document.instance_variable_set("@raw_path", fixture("file.docx"))
     @document.instance_variable_set("@md", "")
-
     stub = stub_request(:put, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.md").
          with(:body => "{\"branch\":\"master\",\"author\":{\"email\":\"ben@example.com\",\"name\":\"Ben Balter\"},\"content\":\"\",\"message\":\"Convert /file.docx\"}").
          to_return(:status => 200)

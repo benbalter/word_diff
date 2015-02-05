@@ -18,10 +18,6 @@ class WordDiff < Sinatra::Base
       @md_path ||= path.gsub(/\.docx?$/i, ".md")
     end
 
-    def raw_path
-      "#{HOST}/#{repo}/raw/#{ref}#{path}"
-    end
-
     def filename
       @filename ||= File.basename(path)
     end
@@ -31,8 +27,9 @@ class WordDiff < Sinatra::Base
     end
 
     def download
-      output, status = Open3.capture2e("wget", raw_path, "-O", local_path, "--quiet")
-      local_path unless status != 0
+      blob = WordDiff.client.contents repo, :path => path
+      contents = Base64.decode64(blob.content)
+      File.write(local_path, contents)
     end
 
     def local_path
