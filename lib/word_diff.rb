@@ -19,7 +19,7 @@ class WordDiff < Sinatra::Base
   end
 
   def branch
-    "master"
+    @branch ||= push["ref"].gsub(/^refs\/heads\//)
   end
 
   def self.client
