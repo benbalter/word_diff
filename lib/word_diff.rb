@@ -1,0 +1,65 @@
+require 'sinatra/base'
+require 'json'
+require 'pp'
+require 'octokit'
+require 'word-to-markdown'
+require 'open3'
+require 'tmpdir'
+require 'dotenv'
+require_relative "word_diff/document"
+
+Dotenv.load
+
+class WordDiff < Sinatra::Base
+
+  attr_accessor :push
+
+  def self.logger
+    @logger ||= Logger.new(STDOUT)
+  end
+
+  def tmpdir
+    @tmpdir ||= Dir.mktmpdir
+  end
+
+  def repo
+    push["repository"]["full_name"]
+  end
+
+  def commits
+    push["commits"]
+  end
+
+  def branch
+    "master"
+  end
+
+  def self.client
+    @client ||= Octokit::Client.new(:access_token => ENV["GITHUB_TOKEN"])
+  end
+
+  post "/" do
+    @push = JSON.parse(request.body.read)
+    commits.each do |commit|
+      ["added", "removed", "modified"].each do |type|
+        files = commit[type].select {|path| path =~ /\.docx?/i }
+        files.each do |path|
+          file = WordDiff::Document.new(
+            :repo   => repo,
+            :path   => path,
+            :ref    => commit["id"],
+            :tmpdir => tmpdir,
+            :branch => branch,
+            :author => commit["author"]
+          )
+          if type == "removed"
+            file.delete
+          else
+            file.convert
+          end
+        end
+      end
+    end
+    halt 200
+  end
+end
