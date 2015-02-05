@@ -3,7 +3,7 @@ class WordDiff < Sinatra::Base
 
     HOST = "https://github.com"
 
-    attr_accessor :repo, :ref, :path, :tmpdir, :branch
+    attr_accessor :repo, :ref, :path, :tmpdir, :branch, :author
 
     def initialize(options)
       @repo   = options[:repo]
@@ -19,7 +19,7 @@ class WordDiff < Sinatra::Base
     end
 
     def raw_path
-      "#{HOST}/#{repo}/raw/#{ref}/#{path}"
+      "#{HOST}/#{repo}/raw/#{ref}#{path}"
     end
 
     def filename
@@ -95,7 +95,7 @@ class WordDiff < Sinatra::Base
     end
 
     def delete
-      WordDiff.client.delete_conents(
+      WordDiff.client.delete_contents(
         repo,                  # Repo
         md_path,               # Path
         "Deleting #{md_path}", # Commit message

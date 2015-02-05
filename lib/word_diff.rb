@@ -14,20 +14,8 @@ class WordDiff < Sinatra::Base
 
   attr_accessor :push
 
-  def self.logger
-    @logger ||= Logger.new(STDOUT)
-  end
-
   def tmpdir
     @tmpdir ||= Dir.mktmpdir
-  end
-
-  def repo
-    push["repository"]["full_name"]
-  end
-
-  def commits
-    push["commits"]
   end
 
   def branch
@@ -38,14 +26,17 @@ class WordDiff < Sinatra::Base
     @client ||= Octokit::Client.new(:access_token => ENV["GITHUB_TOKEN"])
   end
 
+  def push
+    @push ||= JSON.parse(request.body.read)
+  end
+
   post "/" do
-    @push = JSON.parse(request.body.read)
-    commits.each do |commit|
+    push["commits"].each do |commit|
       ["added", "removed", "modified"].each do |type|
         files = commit[type].select {|path| path =~ /\.docx?/i }
         files.each do |path|
           file = WordDiff::Document.new(
-            :repo   => repo,
+            :repo   => push["repository"]["full_name"],
             :path   => path,
             :ref    => commit["id"],
             :tmpdir => tmpdir,
