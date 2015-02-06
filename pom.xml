@@ -4,13 +4,4 @@
   <artifactId>dummy</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>com.heroku.sdk</groupId>
-        <artifactId>heroku-maven-plugin</artifactId>
-        <version>0.1.5</version>
-      </plugin>
-    </plugins>
-  </build>
 </project>
