@@ -54,7 +54,7 @@ class WordDiff < Sinatra::Base
             :tmpdir  => tmpdir,
             :branch  => branch,
             :author  => commit["author"],
-            :message => commit["message"]
+            :message => "[Word Diff] #{commit["message"]}"
           )
           if type == "removed"
             file.delete

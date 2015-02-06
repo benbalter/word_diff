@@ -10,7 +10,7 @@ describe "WordDiff::Document" do
       :tmpdir  => Dir.mktmpdir,
       :branch  => "master",
       :author  => { :email => "ben@example.com", :name => "Ben Balter" },
-      :message => "Convert /file.docx"
+      :message => "[Word Diff] Convert /file.docx"
     )
 
     stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.docx?ref=master").
@@ -74,7 +74,7 @@ describe "WordDiff::Document" do
   it "creates the md file" do
     @document.instance_variable_set("@md", "")
     stub = stub_request(:put, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.md").
-         with(:body => "{\"branch\":\"master\",\"author\":{\"email\":\"ben@example.com\",\"name\":\"Ben Balter\"},\"content\":\"\",\"message\":\"Convert /file.docx\"}").
+         with(:body => "{\"branch\":\"master\",\"author\":{\"email\":\"ben@example.com\",\"name\":\"Ben Balter\"},\"content\":\"\",\"message\":\"[Word Diff] Convert /file.docx\"}").
          to_return(:status => 200)
 
     @document.create
@@ -88,7 +88,7 @@ describe "WordDiff::Document" do
         to_return(:status => 200, :body => fixture, :headers => {'Content-Type'=>'application/json'})
 
     stub = stub_request(:put, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.md").
-         with(:body => "{\"branch\":\"master\",\"author\":{\"email\":\"ben@example.com\",\"name\":\"Ben Balter\"},\"sha\":\"fff6fe3a23bf1c8ea0692b4a883af99bee26fd3b\",\"content\":\"\",\"message\":\"Convert /file.docx\"}").
+         with(:body => "{\"branch\":\"master\",\"author\":{\"email\":\"ben@example.com\",\"name\":\"Ben Balter\"},\"sha\":\"fff6fe3a23bf1c8ea0692b4a883af99bee26fd3b\",\"content\":\"\",\"message\":\"[Word Diff] Convert /file.docx\"}").
          to_return(:status => 200)
 
     @document.update
@@ -102,7 +102,7 @@ describe "WordDiff::Document" do
         to_return(:status => 200, :body => fixture, :headers => {'Content-Type'=>'application/json'})
 
     stub = stub_request(:put, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.md").
-         with(:body => "{\"branch\":\"master\",\"author\":{\"email\":\"ben@example.com\",\"name\":\"Ben Balter\"},\"sha\":\"fff6fe3a23bf1c8ea0692b4a883af99bee26fd3b\",\"content\":\"\",\"message\":\"Convert /file.docx\"}").
+         with(:body => "{\"branch\":\"master\",\"author\":{\"email\":\"ben@example.com\",\"name\":\"Ben Balter\"},\"sha\":\"fff6fe3a23bf1c8ea0692b4a883af99bee26fd3b\",\"content\":\"\",\"message\":\"[Word Diff] Convert /file.docx\"}").
          to_return(:status => 200)
 
     @document.update
@@ -112,7 +112,7 @@ describe "WordDiff::Document" do
   it "converts the file when it doesn't exist" do
     @document.instance_variable_set("@md", "")
     stub = stub_request(:put, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.md").
-         with(:body => "{\"branch\":\"master\",\"author\":{\"email\":\"ben@example.com\",\"name\":\"Ben Balter\"},\"content\":\"\",\"message\":\"Convert /file.docx\"}").
+         with(:body => "{\"branch\":\"master\",\"author\":{\"email\":\"ben@example.com\",\"name\":\"Ben Balter\"},\"content\":\"\",\"message\":\"[Word Diff] Convert /file.docx\"}").
          to_return(:status => 200)
 
     @document.create
@@ -125,7 +125,7 @@ describe "WordDiff::Document" do
         to_return(:status => 200, :body => fixture, :headers => {'Content-Type'=>'application/json'})
 
     stub = stub_request(:delete, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.md").
-         with(:body => "{\"branch\":\"master\",\"author\":{\"email\":\"ben@example.com\",\"name\":\"Ben Balter\"},\"message\":\"Convert /file.docx\",\"sha\":\"fff6fe3a23bf1c8ea0692b4a883af99bee26fd3b\"}").
+         with(:body => "{\"branch\":\"master\",\"author\":{\"email\":\"ben@example.com\",\"name\":\"Ben Balter\"},\"message\":\"[Word Diff] Convert /file.docx\",\"sha\":\"fff6fe3a23bf1c8ea0692b4a883af99bee26fd3b\"}").
          to_return(:status => 200, :body => "", :headers => {})
 
     @document.delete
