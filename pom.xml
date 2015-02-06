@@ -5,18 +5,15 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <build>
-    <pluginManagement>
-      <plugins>
-        <build>
-          <plugins>
-            <plugin>
-              <groupId>com.heroku.sdk</groupId>
-              <artifactId>heroku-maven-plugin</artifactId>
-              <version>0.1.5</version>
-            </plugin>
-          </plugins>
-        </build>
-      </plugins>
-    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>com.heroku.sdk</groupId>
+        <artifactId>heroku-maven-plugin</artifactId>
+        <version>0.1.5</version>
+        <configuration>
+          <jdkVersion>1.6</jdkVersion>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
