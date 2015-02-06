@@ -16,7 +16,10 @@ Under the hood, it uses [word-to-markdown](https://github.com/benbalter/word-to-
 
 ## When you'd use this
 
-If you're exchanging Word documents with someone, and you want to quickly verify what they changed, or prefer to collaborate internally using GitHub/markdown rather than emailing around tracked changes in documents.
+If you're collaborating on text with someone:
+
+1. Using Git's native diff functionality, you can quickly verified what's changed or compare changes over time
+2. You can collaborate in Markdown/GitHub while the world collaborates via email/Word
 
 ## Setup
 
