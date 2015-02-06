@@ -4,12 +4,13 @@ describe "WordDiff::Document" do
 
   before do
     @document = WordDiff::Document.new(
-      :repo   => "benbalter/test-repo-ignore-me",
-      :path   => "/file.docx",
-      :ref    => "aae67a7e9c7097c1af8c7fcbf56c2a736f9e69ff",
-      :tmpdir => Dir.mktmpdir,
-      :branch => "master",
-      :author => { :email => "ben@example.com", :name => "Ben Balter" }
+      :repo    => "benbalter/test-repo-ignore-me",
+      :path    => "/file.docx",
+      :ref     => "aae67a7e9c7097c1af8c7fcbf56c2a736f9e69ff",
+      :tmpdir  => Dir.mktmpdir,
+      :branch  => "master",
+      :author  => { :email => "ben@example.com", :name => "Ben Balter" },
+      :message => "Convert /file.docx"
     )
 
     stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.docx").
@@ -124,7 +125,7 @@ describe "WordDiff::Document" do
         to_return(:status => 200, :body => fixture, :headers => {'Content-Type'=>'application/json'})
 
     stub = stub_request(:delete, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.md").
-         with(:body => "{\"branch\":\"master\",\"author\":{\"email\":\"ben@example.com\",\"name\":\"Ben Balter\"},\"message\":\"Deleting /file.md\",\"sha\":\"fff6fe3a23bf1c8ea0692b4a883af99bee26fd3b\"}").
+         with(:body => "{\"branch\":\"master\",\"author\":{\"email\":\"ben@example.com\",\"name\":\"Ben Balter\"},\"message\":\"Convert /file.docx\",\"sha\":\"fff6fe3a23bf1c8ea0692b4a883af99bee26fd3b\"}").
          to_return(:status => 200, :body => "", :headers => {})
 
     @document.delete

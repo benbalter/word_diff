@@ -3,15 +3,16 @@ class WordDiff < Sinatra::Base
 
     HOST = "https://github.com"
 
-    attr_accessor :repo, :ref, :path, :tmpdir, :branch, :author
+    attr_accessor :repo, :ref, :path, :tmpdir, :branch, :author, :message
 
     def initialize(options)
-      @repo   = options[:repo]
-      @ref    = options[:ref]
-      @path   = options[:path]
-      @tmpdir = options[:tmpdir] || Dir.mktmpdir
-      @branch = options[:branch]
-      @author = options[:author]
+      @repo    = options[:repo]
+      @ref     = options[:ref]
+      @path    = options[:path]
+      @tmpdir  = options[:tmpdir] || Dir.mktmpdir
+      @branch  = options[:branch]
+      @author  = options[:author]
+      @message = options[:message]
     end
 
     def md_path
@@ -66,11 +67,11 @@ class WordDiff < Sinatra::Base
 
     def create
       WordDiff.client.create_contents(
-        repo,              # Repo
-        md_path,           # Path
-        "Convert #{path}", # Commit message
-        to_md,             # Content
-        {                  # Options
+        repo,    # Repo
+        md_path, # Path
+        message, # Commit message
+        to_md,   # Content
+        {        # Options
           :branch => branch,
           :author => author
         }
@@ -79,12 +80,12 @@ class WordDiff < Sinatra::Base
 
     def update
       WordDiff.client.update_contents(
-        repo,              # Repo
-        md_path,           # Path
-        "Convert #{path}", # Commit message
-        md_sha,            # Blob Sha
-        to_md,             # Content
-        {                  # Options
+        repo,    # Repo
+        md_path, # Path
+        message, # Commit message
+        md_sha,  # Blob Sha
+        to_md,   # Content
+        {        # Options
           :branch => branch,
           :author => author
         }
@@ -93,11 +94,11 @@ class WordDiff < Sinatra::Base
 
     def delete
       WordDiff.client.delete_contents(
-        repo,                  # Repo
-        md_path,               # Path
-        "Deleting #{md_path}", # Commit message
-        md_sha,                # Blob sha
-        {                      # Options
+        repo,    # Repo
+        md_path, # Path
+        message, # Commit message
+        md_sha,  # Blob sha
+        {        # Options
           :branch => branch,
           :author => author
         }

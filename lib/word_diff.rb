@@ -48,12 +48,13 @@ class WordDiff < Sinatra::Base
         files = commit[type].select {|path| path =~ /\.docx?/i }
         files.each do |path|
           file = WordDiff::Document.new(
-            :repo   => push["repository"]["full_name"],
-            :path   => path,
-            :ref    => commit["id"],
-            :tmpdir => tmpdir,
-            :branch => branch,
-            :author => commit["author"]
+            :repo    => push["repository"]["full_name"],
+            :path    => path,
+            :ref     => commit["id"],
+            :tmpdir  => tmpdir,
+            :branch  => branch,
+            :author  => commit["author"],
+            :message => commit["message"]
           )
           if type == "removed"
             file.delete
