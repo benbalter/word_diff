@@ -13,7 +13,7 @@ describe "WordDiff" do
   end
 
   it "parses the push" do
-    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.docx").
+    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.docx?ref=master").
        to_return(:status => 200, :body => File.open(fixture("contents.json")).read, :headers => {'Content-Type'=>'application/json'})
 
     fixture = File.open(fixture("md-exists.json")).read

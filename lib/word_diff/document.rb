@@ -28,7 +28,7 @@ class WordDiff < Sinatra::Base
     end
 
     def download
-      blob = WordDiff.client.contents repo, :path => path
+      blob = WordDiff.client.contents repo, { :path => path, :ref => branch }
       contents = Base64.decode64(blob.content)
       File.write(local_path, contents)
     end
