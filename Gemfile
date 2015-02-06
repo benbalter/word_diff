@@ -5,9 +5,9 @@ gem "octokit"
 gem "word-to-markdown"
 gem "dotenv"
 gem "rack", "1.5.2"
+gem "rake"
 
 group :test do
-  gem "rake"
   gem "rspec"
   gem "webmock"
   gem "rack-test"
