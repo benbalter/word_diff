@@ -10,9 +10,6 @@
         <groupId>com.heroku.sdk</groupId>
         <artifactId>heroku-maven-plugin</artifactId>
         <version>0.1.5</version>
-        <configuration>
-          <jdkVersion>1.6</jdkVersion>
-        </configuration>
       </plugin>
     </plugins>
   </build>
