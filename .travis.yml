@@ -12,3 +12,7 @@ before_install:
 cache:
   - bundler
   - apt
+
+env:
+  global:
+    SECRET_TOKEN: test
