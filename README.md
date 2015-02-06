@@ -8,7 +8,7 @@ A bot that automatically converts any Word document committed to a GitHub repo t
 
 Lets say you have a file called `document.docx` and you commit it to your GitHub repo.
 
-Word Diff will automatically make a second commit, along side your commit to add a `document.md` file, with the contents of `document.docx` converted to markdown. It'll even note that you're the commit author.
+Word Diff will automatically make a second commit, along side your commit to add a `document.md` file, with the contents of `document.docx` converted to markdown. It'll even note that you're the commit author and copy over your commit message.
 
 If you make changes and commit a new version of `document.docx`, Word Diff will update the `document.md` file, and if you delete `document.docx`, `document.md` gets deleted as well.
 
