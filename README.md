@@ -22,7 +22,7 @@ If you're exchanging Word documents with someone, and you want to quickly verify
 
 1. Create a bot account, and [create a new personal access token](https://github.com/settings/tokens/new) with `public_repo` scope
 2. Set the token as a `GITHUB_TOKEN` environmental variable
-3. Add the Word Diff server as a web hook on the repository, receiving push events
+3. Add the Word Diff server as a web hook on the repository, receiving push events, stored the shared secret token as `SECRET_TOKEN`
 
 ## Running on Heroku
 
