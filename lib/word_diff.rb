@@ -27,7 +27,19 @@ class WordDiff < Sinatra::Base
   end
 
   def push
-    @push ||= JSON.parse(request.body.read)
+    @push ||= JSON.parse(request_body)
+  end
+
+  def request_body
+    @body ||= begin
+      request.body.rewind
+      request.body.read
+    end
+  end
+
+  before do
+    signature = 'sha1=' + OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha1'), ENV['SECRET_TOKEN'], request_body)
+    return halt 401 unless Rack::Utils.secure_compare(signature, request.env['HTTP_X_HUB_SIGNATURE'].to_s)
   end
 
   post "/" do
