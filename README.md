@@ -22,6 +22,10 @@ If you're exchanging Word documents with someone, and you want to quickly verify
 2. Set the token as a `GITHUB_TOKEN` environmental variable
 3. Add the Word Diff server as a web hook on the repository, receiving push events
 
+## Running on Heroku
+
+In order to get LibreOffice installed, you'll want to run `heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git`. This will instruct Heroku to read the `.buildpacks` file.
+
 ## Running locally
 
 1. `bundle exec rackup`
