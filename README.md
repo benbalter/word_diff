@@ -2,6 +2,8 @@
 
 A bot that automatically converts any Word document committed to a GitHub repo to Markdown
 
+[![Build Status](https://travis-ci.org/benbalter/word_diff.svg?branch=master)](https://travis-ci.org/benbalter/word_diff)
+
 ## How it works
 
 Lets say you have a file called `document.docx` and you commit it to your GitHub repo.
