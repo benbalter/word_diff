@@ -1,6 +1,6 @@
 # Word Diff
 
-A bot that automatically converts any Word document committed to a GitHub repo to Markdown
+Word Diff empowers you to be a Markdown person in a Microsoft Word world by automatically converting any Word document committed to a GitHub repo to Markdown.
 
 [![Build Status](https://travis-ci.org/benbalter/word_diff.svg?branch=master)](https://travis-ci.org/benbalter/word_diff)
 
