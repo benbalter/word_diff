@@ -56,9 +56,11 @@ class WordDiff < Sinatra::Base
 
     def md_sha
       @md_sha ||= begin
-        file = WordDiff.client.contents(repo, :path => directory).find { |f| f[:path] == md_path }
+        file = WordDiff.client.contents(repo, :path => directory, :ref => branch).find { |f| f[:path] == md_path }
         file[:sha] if file
       end
+    rescue
+      nil
     end
 
     def convert

@@ -52,21 +52,21 @@ describe "WordDiff::Document" do
 
   it "knows if the markdown file exists" do
     fixture = File.open(fixture("md-exists.json")).read
-    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/").
+    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/?ref=master").
         to_return(:status => 200, :body => fixture, :headers => {'Content-Type'=>'application/json'})
     expect(@document.md_exists?).to eql(true)
   end
 
   it "knows when the markdown file doesn't exist" do
     fixture = File.open(fixture("md-doesnt-exist.json")).read
-    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/").
+    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/?ref=master").
         to_return(:status => 200, :body => fixture, :headers => {'Content-Type'=>'application/json'})
     expect(@document.md_exists?).to eql(false)
   end
 
   it "returns the md sha" do
     fixture = File.open(fixture("md-exists.json")).read
-    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/").
+    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/?ref=master").
         to_return(:status => 200, :body => fixture, :headers => {'Content-Type'=>'application/json'})
     expect(@document.md_sha).to eql("fff6fe3a23bf1c8ea0692b4a883af99bee26fd3b")
   end
@@ -84,7 +84,7 @@ describe "WordDiff::Document" do
   it "updates the md file" do
     @document.instance_variable_set("@md", "")
     fixture = File.open(fixture("md-exists.json")).read
-    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/").
+    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/?ref=master").
         to_return(:status => 200, :body => fixture, :headers => {'Content-Type'=>'application/json'})
 
     stub = stub_request(:put, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.md").
@@ -98,7 +98,7 @@ describe "WordDiff::Document" do
   it "converts the file when it exists" do
     @document.instance_variable_set("@md", "")
     fixture = File.open(fixture("md-exists.json")).read
-    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/").
+    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/?ref=master").
         to_return(:status => 200, :body => fixture, :headers => {'Content-Type'=>'application/json'})
 
     stub = stub_request(:put, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.md").
@@ -121,7 +121,7 @@ describe "WordDiff::Document" do
 
   it "deletes the file" do
     fixture = File.open(fixture("md-exists.json")).read
-    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/").
+    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/?ref=master").
         to_return(:status => 200, :body => fixture, :headers => {'Content-Type'=>'application/json'})
 
     stub = stub_request(:delete, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.md").
