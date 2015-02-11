@@ -24,12 +24,24 @@ If you're collaborating on text with someone:
 ## Setup
 
 1. Create a bot account, and [create a new personal access token](https://github.com/settings/tokens/new) with `public_repo` scope
-2. Set the token as a `GITHUB_TOKEN` environmental variable
-3. Add the Word Diff server as a web hook on the repository, receiving push events, stored the shared secret token as `SECRET_TOKEN`
+2. Set the token as a `GITHUB_TOKEN` environmental variable.
+3. Add the Word Diff server as a web hook on the repository, receiving push events. You can leave all other settings about formats as they are. Choose a shared secret token as `SECRET_TOKEN` which you then have to set on your server/hosting as well. See how you set it on heroku below.
+4. for local use, you can also store those variables in .env which you then should add to your .gitignore
 
 ## Running on Heroku
 
-In order to get LibreOffice installed, you'll want to run `heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git`. This will instruct Heroku to read the `.buildpacks` file.
+1. If you are familiar with heroku, just do what you do. If not, follow the ruby guide for heroku until you are logged in https://devcenter.heroku.com/articles/getting-started-with-ruby
+2. Clone the worddiff repo to a local folder of your choosing. Create the .env file with the above mentioned `GITHUB_TOKEN` and `SECRET_TOKEN`.
+3. With heroku installed, do `heroku create` in the worddiff folder. This also adds a heroku remote to your local git repo.
+4. In order to get LibreOffice installed, you'll want to run `heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git`. This will instruct Heroku to read the `.buildpacks` file. Ideally do this before you push to heroku the first time.
+5. Then set the two environment variable for Heroku: `heroku config:set GITHUB_TOKEN=yourTokenHere` and `heroku config:set SECRET_TOKEN=yoursecretchosentoken`
+6. Finally do `git push heroku master` and the app should be deployed. The heroku repo should have been added before.
+7. When opening the website heroku tells you, there should be nothing there but no error either.
+
+## Troubleshootin
+
+1. Check logs.
+2. Check if webhook works at the repository.
 
 ## Running locally
 
