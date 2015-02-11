@@ -17,7 +17,7 @@ describe "WordDiff" do
        to_return(:status => 200, :body => File.open(fixture("contents.json")).read, :headers => {'Content-Type'=>'application/json'})
 
     fixture = File.open(fixture("md-exists.json")).read
-    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/").
+    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/?ref=master").
         to_return(:status => 200, :body => fixture, :headers => {'Content-Type'=>'application/json'})
 
     stub = stub_request(:put, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.md").
@@ -33,7 +33,7 @@ describe "WordDiff" do
        to_return(:status => 200, :body => File.open(fixture("contents.json")).read, :headers => {'Content-Type'=>'application/json'})
 
     fixture = File.open(fixture("md-exists.json")).read
-    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/").
+    stub_request(:get, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/?ref=master").
         to_return(:status => 200, :body => fixture, :headers => {'Content-Type'=>'application/json'})
 
     stub_request(:put, "https://api.github.com/repos/benbalter/test-repo-ignore-me/contents/file.md").
