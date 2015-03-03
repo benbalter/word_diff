@@ -38,7 +38,7 @@ If you're collaborating on text with someone:
 6. Finally do `git push heroku master` and the app should be deployed. The heroku repo should have been added before.
 7. When opening the website heroku tells you, there should be nothing there but no error either.
 
-## Troubleshootin
+## Troubleshooting
 
 1. Check logs.
 2. Check if webhook works at the repository.
