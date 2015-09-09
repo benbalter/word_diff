@@ -1,3 +1,3 @@
 https://github.com/heroku/heroku-buildpack-java.git#v32
-https://github.com/rishihahs/heroku-buildpack-libreoffice
+https://github.com/rishihahs/heroku-buildpack-libreoffice#41732b8
 https://github.com/heroku/heroku-buildpack-ruby.git
