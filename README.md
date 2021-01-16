@@ -47,3 +47,10 @@ If you're collaborating on text with someone:
 
 1. `bundle exec rackup`
 2. Follow the [ngrok documentation](https://developer.github.com/webhooks/configuring/#using-ngrok) to forward requests to your computer if you don't want to set up a development server
+
+## Running on Docker
+
+1. Build the docker image `docker build -t <username>/word-diff:<tag> .`
+2. Run the image in a container with the required environment variables
+   - `docker run -d -p 3001:3001 -e PORT='3001' -e GITHUB_TOKEN='<token>' -e SECRET_TOKEN='<token>' --name word-diff <username>/word-diff:<tag>`
+   - make sure to replace the values with your information
